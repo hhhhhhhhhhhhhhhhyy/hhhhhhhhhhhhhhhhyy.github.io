@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <style>
+      *{
+         margin: 0;
+         padding:0;
+      }
+      ul,ol,li{
+         list-style: none;
+      }
+      img{
+         width: 100%;
+         height:100%;
+         display: block;
+      }
+      .banner{
+         width:100%;
+         height:100px;
+         position: relative;
+         margin:50px 0;
+      }
+      .banner >ul{
+         width:100%;
+         height: 100%;
+         position: relative;
+      }
+      .banner >ul >li{
+         width: 100%;
+         height:100%;
+         position: absolute;
+         left:0;
+         top:0;
+         opacity: 0;
+         transition: opacity.5s linear;
+      }
+      .banner >ul >li.active{
+         opacity:1;
+      }
+      .banner > ol{
+         width:50px;
+         height:10px;
+         position: absolute;
+         left:1px;
+         bottom:1px;
+         background-color: rgb(0, 0, 0);
+         display:flex;
+         justify-content: space-around;
+         align-items: center;
+         border-radius: 1px;
+      }
+      .banner > ol > li{
+         width:5px;
+         height:5px;
+         background-color:#fff;
+         border-radius: 50%;
+         cursor:pointer;
+      }
+      .banner > ol > li.active {
+         background-color:orange;
+      }
+      .banner > div{
+         width:40px;
+         height:60px;
+         position: absolute;
+         top: 50%;
+         transform: translateY(-50%);
+         background-color: black;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         font-size: 30ox;
+         color: aliceblue;
+      }
+      .banner > div.left{
+         width:10px;
+         height:10px;
+         left:0;
+      }
+      .banner > div.right{
+         width:10px;
+         height:10px;
+         right:0;
+      }
+   </style>  <!--定义初始值-->
+</head>
+<body>
+<div class="banner">
+   <ul class="imgBox">
+      <li class="active"><img src="fu.jpg" alt=""></li>
+      <li><img src="hehao.jpg" alt=""></li>
+      <li><img src="ai.jpg" alt=""></li>
+      <li><img src="cloud_ai.jpg" alt=""></li>
+   </ul>
+   <ol>
+      <li data-i='0' data-name="point" class="active"></li>
+      <li data-i='1' data-name="point"></li>
+      <li data-i='2' data-name="point"></li>
+      <li data-i='3' data-name="point"></li>
+   </ol>
+   <div class="left">&lt;</div>
+   <div class="right">&gt;</div>
+</div>
+   <script>    
+   var imgs=document.querySelectorAll('ul > li')
+   var points=document.querySelectorAll('ol > li')
+   var banner=document.querySelector(".banner")
+   var index=0
+
+   function changeone(type){
+      imgs[index].className=''
+      points[index].className=''  
+      //根据type传递的参数 切换index的值
+      if(type===true){
+         index++
+      }else if(type===false){
+      index--
+      }else{
+         index=type
+      }
+   //判定一下index的边界值
+      if(index >=imgs.length){
+         index=0
+      }
+      if(index<0){
+         index=imgs.length-1
+      }//第一张切换完就是最后一张
+      //显示改变后的最后一张
+      imgs[index].className='active'
+      points[index].className='active'
+   }
+   //绑定点击事件
+   banner.onclick=function(e){
+      console.log(e)
+      if(e.target.className ==='left'){
+         changeone(false)
+      }
+      if(e.target.className==='right'){
+        changeone(true)
+      }
+      if(e.target.dataset.name==='point'){
+         var i =e.target.dataset.i-0
+         changeone(i)
+      }
+   }
+   //定时器
+   setInterval(function(){
+      changeone(true)
+   },5000)
+   </script>
+</body>
+</html>
